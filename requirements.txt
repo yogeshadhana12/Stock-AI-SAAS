@@ -1,0 +1,16 @@
+streamlit
+yfinance
+pandas
+plotly
+ollama
+sentence-transformers
+pypdf
+langchain
+langchain-community
+nsepython
+fastapi 
+uvicorn
+flet 
+requests
+
+
