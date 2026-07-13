@@ -18,9 +18,9 @@ from market_data import (
 # LIVE AUTO REFRESH (30 sec)
 # ==========================================
 
-st_autorefresh = st.experimental_set_query_params  # fallback safe line
+from streamlit_autorefresh import st_autorefresh
+st_autorefresh(interval=5000, key="refresh")
 
-st_autorefresh = st_autorefresh  # keeps Streamlit rerun stable
 
 st.write("")  # spacer
 st_autorefresh = st_autorefresh
