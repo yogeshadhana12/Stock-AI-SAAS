@@ -84,7 +84,16 @@ def analyze_stock(symbol):
             return None
 
         if history.empty:
+            print(f"No data found: {symbol}")
             return None
+        
+        try:
+            info = stock.info
+        except Exception:
+            info = {}
+
+        stock = yf.Ticker(symbol)
+
 
         # RSI
         history["RSI"] = calculate_rsi(history["Close"])
@@ -124,7 +133,7 @@ def run_screener(stock_list):
     def worker(symbol):
         return analyze_stock(symbol)
 
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         data = executor.map(worker, stock_list)
 
     for result in data:
