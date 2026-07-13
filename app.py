@@ -14,16 +14,6 @@ from market_data import (
     ALL_STOCKS
 )
 
-# ==========================================
-# LIVE AUTO REFRESH (30 sec)
-# ==========================================
-
-from streamlit_autorefresh import st_autorefresh
-st_autorefresh(interval=5000, key="refresh")
-
-
-st.write("")  # spacer
-st_autorefresh = st_autorefresh
 
 # ==========================================
 # PAGE CONFIG
