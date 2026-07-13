@@ -73,8 +73,15 @@ def analyze_stock(symbol):
     try:
 
         stock = yf.Ticker(symbol)
-        info = stock.info
-        history = stock.history(period="6mo")
+        try:
+            info = stock.info
+        except Exception:
+            info = {}
+
+        try:
+            history = stock.history(period="6mo")
+        except Exception:
+            return None
 
         if history.empty:
             return None
@@ -117,7 +124,7 @@ def run_screener(stock_list):
     def worker(symbol):
         return analyze_stock(symbol)
 
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(max_workers=3) as executor:
         data = executor.map(worker, stock_list)
 
     for result in data:

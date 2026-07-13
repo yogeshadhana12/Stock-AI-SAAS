@@ -243,17 +243,23 @@ with col3:
 # TOP 50 NSE SCREENER
 # ==========================================
 
+@st.cache_data(ttl=3600)
+def cached_screener(stocks):
+    return run_screener(stocks)
+
+
 st.divider()
 
 st.title("📊 AI Stock Screener")
 
 st.write("Scanning Top 50 NSE Stocks")
 
+
 if st.button("🚀 Run Top 50 Screener"):
 
     with st.spinner("🔍 Scanning Top 50 NSE Stocks..."):
 
-        df = run_screener(TOP_50_NSE)
+        df = cached_screener(tuple(TOP_50_NSE))
 
     if not df.empty:
 
@@ -261,11 +267,10 @@ if st.button("🚀 Run Top 50 Screener"):
 
         st.dataframe(
             df,
-            use_container_width=True
+            width="stretch"
         )
 
         # DOWNLOAD CSV
-
         csv = df.to_csv(index=False)
 
         st.download_button(
