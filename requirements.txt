@@ -2,7 +2,7 @@ streamlit
 yfinance
 pandas
 plotly
-ollama
+groq
 sentence-transformers
 pypdf
 langchain
@@ -12,5 +12,3 @@ fastapi
 uvicorn
 flet 
 requests
-
-

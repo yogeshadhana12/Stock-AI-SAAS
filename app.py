@@ -1,8 +1,13 @@
 import streamlit as st
 import yfinance as yf
 import plotly.graph_objects as go
-import ollama
+from groq import Groq
+import os
 import pandas as pd
+
+client = Groq(
+    api_key=st.secrets["GROQ_API_KEY"]
+)
 
 from screener import (
     run_screener,
@@ -64,11 +69,11 @@ def analyze_stock_ai(info):
     prompt = f"""
 You are an expert Indian stock market analyst.
 
-Analyze this company data:
+Analyze this company:
 
 {info}
 
-Provide response in this format:
+Provide:
 
 1. Summary
 2. Strengths
@@ -77,20 +82,22 @@ Provide response in this format:
 5. Recommendation
 6. Beginner Friendly Explanation
 
-Keep response short and professional.
+Keep it concise and professional.
 """
 
-    response = ollama.chat(
-        model="llama3",
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
         messages=[
             {
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        temperature=0.3,
+        max_tokens=800,
     )
 
-    return response["message"]["content"]
+    return response.choices[0].message.content
 
 # ==========================================
 # BUTTONS
